@@ -1,21 +1,39 @@
 2015/9/7
 
-- 関数抜きだしツールの調査
+//- 関数抜きだしツールの調査
 	//- SilentBob
-		参考HP
-		https://osdn.jp/magazine/07/03/13/0115244/2
+		公式
+			http://silentbob.sourceforge.net/
+		利用方法の説明
+			https://osdn.jp/magazine/07/03/13/0115244/2
 
+	//- ctagsでは利用できない？
+		対応していない
 
-- 使ってみる
+	//- gmockのmock作成スクリプトを利用するのと比べてどちらが楽？
+		テスト対象が限定される方が作業コストを抑制できると考える。
+		あとcソースでは、クラス定義がないのでスクリプトは利用できない。
+
+//- silentbob使ってみる
 	//- インストール
-		- ruby インストール
-		- ruby build.rb でバイナリ作成
+		- CMakeCache.txt を編集
+			下記で定義しているパスを展開したsilentbobのディレクトリパスに調整
+				Bob_BINARY_DIR:STATIC
+				Bob_SOURCE_DIR:STATIC
+				CMAKE_CACHEFILE_DIR:INTERNAL
+				CMAKE_HOME_DIRECTORY:INTERNAL
+				
+		- cmakeでビルドとインストール
+			cmake .
+			make
+			make install
 
 	//- 実行
-
+		- タグ作成と指定関数コードの抽出
+			silentbob --make-ctags
+			silentbob --tags 抽出したい関数名
+		
 - gtest, gmockで実行してみる
-
-
 
 
 - 課題
@@ -25,11 +43,6 @@
 		- 関数内で#ifdefされている場合は、#ifdefコードがそのまま入る
 		  コード上でマクロが#defineされていても#ifdefコードは省略
 		  されず、そのまま残る。
-
-	//- ctagsでは利用できない？
-		対応していない
-
-	- gmockのmock作成スクリプトを利用するのと比べてどちらが楽？
 		
 
 以上
